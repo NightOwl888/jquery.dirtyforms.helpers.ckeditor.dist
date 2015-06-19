@@ -8,7 +8,7 @@
   ],
   "description": "A helper to enable CKEditor support when using JQuery Dirty Forms.",
   "keywords": [
-	"ckeditor",
+    "ckeditor",
     "dirty",
     "forms",
     "HTML",
@@ -26,10 +26,10 @@
     "node_modules",
     "bower_components",
     "*.json",
-	".git"
+    ".git"
   ],
   "dependencies": {
     "jquery.dirtyforms": ">=1.0.0",
-	"ckeditor": ">=4.3.3"
+    "ckeditor": ">=4.3.3"
   }
 }
