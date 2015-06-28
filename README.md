@@ -26,12 +26,12 @@ There are several different ways to get the code. Some examples below:
 #### CDN
 The CKEditor helper is available over jsDelivr CDN and can directly included to every page.
 ```HTML
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.dirtyforms/1.1.0/jquery.dirtyforms.helpers.ckeditor.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.dirtyforms/1.2.0/jquery.dirtyforms.helpers.ckeditor.min.js"></script>
 ```
 
 jsDelivr also supports [on-the-fly concatenation of files](https://github.com/jsdelivr/jsdelivr#load-multiple-files-with-single-http-request), so you can reference only 1 URL to get jQuery, jquery.facebox, ckeditor, jquery.dirtyforms, and jquery.dirtyforms.helpers.ckeditor in one request.
 ```HTML
-<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@1.11.3,jquery.facebox,ckeditor(ckeditor.js),jquery.dirtyforms(jquery.dirtyforms.min.js+jquery.dirtyforms.helpers.ckeditor.min.js)"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@1.11.3,jquery.facebox,ckeditor(ckeditor.js),jquery.dirtyforms@1.2.0(jquery.dirtyforms.min.js+jquery.dirtyforms.helpers.ckeditor.min.js)"></script>
 ```
 
 #### Self-Hosted
@@ -65,31 +65,29 @@ PM> Install-Package jquery.dirtyforms.helpers.ckeditor
 
 A [SourceMap](https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit?hl=en_US&pli=1&pli=1) file is also available via CDN or your favorite package manager.
 
-####CDN
+#### CDN
 
 ```HTML
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.dirtyforms/1.1.0/jquery.dirtyforms.helpers.ckeditor.min.js.map"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.dirtyforms/1.2.0/jquery.dirtyforms.helpers.ckeditor.min.js.map"></script>
 ```
 
 #### Package Managers
 
-NPM or Bower will install the file into the destination directory.
+NPM, Bower, and NuGet will install the SourceMap file into the destination directory.
 
 ```
 jquery.dirtyforms.helpers.ckeditor.min.js.map
 ```
 
-For NuGet, this file is not included in the package, but you can get it from [here](https://github.com/NightOwl888/jquery.dirtyforms.helpers.ckeditor.dist/blob/master/jquery.dirtyforms.helpers.ckeditor.min.js.map) if you really need it.
-
-##Usage
+## Usage
 
 This helper is completely automatic - there are no properties or methods to interact with. Simply include the reference to the helper after the [prerequisites](#prerequisites) and use Dirty Forms [as per the documentation](https://github.com/snikch/jquery.dirtyforms#usage) and CKEditor [as per the documetation](http://docs.ckeditor.com/#!/guide/dev_installation).
 
 ```HTML
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
 <script src="//cdn.jsdelivr.net/ckeditor/latest/ckeditor.min.js" type="text/javascript"></script>
-<script src="//cdn.jsdelivr.net/jquery.dirtyforms/1.1.0/jquery.dirtyforms.min.js" type="text/javascript"></script>
-<script src="//cdn.jsdelivr.net/jquery.dirtyforms/1.1.0/jquery.dirtyforms.helpers.ckeditor.min.js" type="text/javascript"></script>
+<script src="//cdn.jsdelivr.net/jquery.dirtyforms/1.2.0/jquery.dirtyforms.min.js" type="text/javascript"></script>
+<script src="//cdn.jsdelivr.net/jquery.dirtyforms/1.2.0/jquery.dirtyforms.helpers.ckeditor.min.js" type="text/javascript"></script>
 ```
 
-> If not using a CDN, you need to apply the dependencies in the same order as the example above.
+> If not using a CDN, you need to apply the dependencies in the same order as in the example above.
