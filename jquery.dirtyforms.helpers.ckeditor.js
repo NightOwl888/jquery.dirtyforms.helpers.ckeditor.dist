@@ -1,4 +1,8 @@
-// CkEditor helper, checks to see if CkEditor editors in the given form are dirty
+/*!
+CkEditor helper module (for jQuery Dirty Forms) | v2.0.0-beta00001 | github.com/snikch/jquery.dirtyforms
+(c) 2012-2015 Mal Curtis
+License MIT
+*/
 
 // Support for UMD: https://github.com/umdjs/umd/blob/master/jqueryPluginCommonjs.js
 // This allows for tools such as Browserify to compose the components together into a single HTTP request.
@@ -8,19 +12,24 @@
         define(['jquery'], factory);
     } else if (typeof exports === 'object') {
         // Node/CommonJS
-        module.exports = factory(require('jquery'));
+        module.exports = factory(require('jquery'), window, document);
     } else {
         // Browser globals
-        factory(jQuery);
+        factory(jQuery, window, document);
     }
-}(function ($) {
+}(function ($, window, document, undefined) {
+    // Use ECMAScript 5's strict mode
+    "use strict";
+
+    var ignoreSelector = '.cke_dialog_ui_button,.cke_tpl_list a';
+
     var ckeditor = {
-        ignoreAnchorSelector: '.cke_dialog_ui_button, .cke_tpl_list a',
-        isDirty: function (form) {
-            editors = ckeditors(form);
-            $.DirtyForms.dirtylog('Checking ' + editors.length + ' ckeditors for dirtyness.');
+        ignoreSelector: ignoreSelector,
+        isDirty: function ($form) {
+            var $editors = ckeditors($form);
+            $.DirtyForms.dirtylog('Checking ' + $editors.length + ' ckeditors for dirtyness.');
             var isDirty = false;
-            editors.each(function (editorIndex) {
+            $editors.each(function (editorIndex) {
                 if (this.checkDirty()) {
                     isDirty = true;
 
@@ -31,17 +40,20 @@
             });
             return isDirty;
         },
-        setClean: function (form) {
-            ckeditors(form).each(function () { this.resetDirty(); });
-        }
+        setClean: function ($form) {
+            ckeditors($form).each(function () { this.resetDirty(); });
+        },
+
+        // Support for Dirty Forms < 2.0
+        ignoreAnchorSelector: ignoreSelector
     };
     var ckeditors = function (form) {
         var $form = form.jquery ? form : $(form);
-        editors = [];
+        var editors = [];
         try {
-            for (var key in CKEDITOR.instances) {
-                if (CKEDITOR.instances.hasOwnProperty(key)) {
-                    editor = CKEDITOR.instances[key];
+            for (var key in window.CKEDITOR.instances) {
+                if (window.CKEDITOR.instances.hasOwnProperty(key)) {
+                    var editor = window.CKEDITOR.instances[key];
                     if ($(editor.element.$).parents().index($form) != -1) {
                         $.DirtyForms.dirtylog('Adding CKEditor with key ' + key);
                         editors.push(editor);
