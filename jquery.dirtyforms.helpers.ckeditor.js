@@ -1,43 +1,36 @@
 /*!
-CkEditor helper module (for jQuery Dirty Forms) | v2.0.0-beta00004 | github.com/snikch/jquery.dirtyforms
+CkEditor helper module (for jQuery Dirty Forms) | v2.0.0-beta00005 | github.com/snikch/jquery.dirtyforms
 (c) 2012-2015 Mal Curtis
 License MIT
 */
 
-// Support for UMD: https://github.com/umdjs/umd/blob/master/jqueryPluginCommonjs.js
-// This allows for tools such as Browserify to compose the components together into a single HTTP request.
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // Node/CommonJS
-        module.exports = factory(require('jquery'), window, document);
-    } else {
-        // Browser globals
-        factory(jQuery, window, document);
-    }
-}(function ($, window, document, undefined) {
-    // Use ECMAScript 5's strict mode
-    "use strict";
+(function($, window, document, undefined) {
+    // Can't use ECMAScript 5's strict mode because several apps 
+    // including ASP.NET trace the stack via arguments.caller.callee 
+    // and Firefox dies if you try to trace through "use strict" call chains. 
+    // See jQuery issue (#13335)
+    // Support: Firefox 18+
+    //"use strict";
 
     var ignoreSelector = '.cke_dialog_ui_button,.cke_tpl_list a';
 
     var ckeditor = {
         ignoreSelector: ignoreSelector,
         isDirty: function ($form) {
-            var $editors = ckeditors($form);
-            $.DirtyForms.dirtylog('Checking ' + $editors.length + ' ckeditors for dirtyness.');
-            var isDirty = false;
-            $editors.each(function (editorIndex) {
-                if (this.checkDirty()) {
-                    isDirty = true;
+            var $editors = ckeditors($form),
+                isDirty = false;
+            if ($editors.length > 0) {
+                $.DirtyForms.dirtylog('Checking ' + $editors.length + ' ckeditors for dirtyness.');
+                $editors.each(function (editorIndex) {
+                    if (this.checkDirty()) {
+                        isDirty = true;
 
-                    $.DirtyForms.dirtylog('CKEditor with index ' + editorIndex + ' was dirty, exiting...');
-                    // Return false to break out of the .each() function
-                    return false;
-                }
-            });
+                        $.DirtyForms.dirtylog('CKEditor with index ' + editorIndex + ' was dirty, exiting...');
+                        // Return false to break out of the .each() function
+                        return false;
+                    }
+                });
+            }
             return isDirty;
         },
         setClean: function ($form) {
@@ -50,6 +43,9 @@ License MIT
     var ckeditors = function (form) {
         var $form = form.jquery ? form : $(form);
         var editors = [];
+        if (!window.CKEDITOR || !window.CKEDITOR.instances) {
+            return $(editors);
+        }
         try {
             for (var key in window.CKEDITOR.instances) {
                 if (window.CKEDITOR.instances.hasOwnProperty(key)) {
@@ -67,4 +63,5 @@ License MIT
         return $(editors);
     };
     $.DirtyForms.helpers.push(ckeditor);
-}));
+
+})(jQuery, window, document);
